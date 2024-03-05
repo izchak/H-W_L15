@@ -1,0 +1,14 @@
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    background-color: blueviolet;
+    padding: 5px;
+    color: aliceblue;
+    position: absolute;
+    bottom: 0;
+    height: 2.5rem;
+    
+  }

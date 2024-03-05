@@ -1,12 +1,14 @@
-import StudentsList from "./StudentsList"
+import StudentsList from "./StudentsList";
 
-
-const Dashboard=(props)=>{
-    console.log(props.listOfStudent)
-    return(
-        <div className="student_table">
-        <StudentsList students={props.listOfStudent}/>
-        </div>
-    )
-}
-export default Dashboard
+const Dashboard = ({ listOfStudent, removeStudent, getInfoStudent }) => {
+  return (
+    <div className="student_table">
+      <StudentsList
+        students={listOfStudent}
+        removeStudent={removeStudent}
+        getInfoStudent={getInfoStudent}
+      />
+    </div>
+  );
+};
+export default Dashboard;

@@ -1,0 +1,21 @@
+.header_logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color:blueviolet;
+    margin-bottom: 10px;
+    color: aliceblue;
+  }
+
+  .btn_add{
+    background-color: rgb(143, 85, 198);
+    color: #ddd;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 15px;
+  }
+
+  

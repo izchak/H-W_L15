@@ -1,0 +1,33 @@
+form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 10px;
+  }
+  
+  form input{
+    margin-bottom: 3px;
+  }
+  
+  form label{
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  
+  form button{
+    background-color: rgb(79, 25, 130);
+    color: #ddd;
+    font-weight: bold;
+    
+  }
+  
+  .btn_add_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
+    margin-bottom: 3px;
+  }
