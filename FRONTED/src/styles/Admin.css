@@ -1,0 +1,36 @@
+.user_avatar {
+  width: 50px;
+  border-radius: 50%;
+  background: blueviolet;
+}
+
+.users {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+.users th {
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 10px;
+  padding: 5px;
+  color: blueviolet;
+  text-align: center;
+}
+
+.user_tr:nth-child(even) {
+  background-color: rgb(206, 206, 206);
+}
+
+.users td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.btns_admin_table{
+  padding: 5px;
+  border-radius: 8px;
+  margin-left: 3px;
+  background: blueviolet;
+  color: white;
+}

@@ -1,12 +1,61 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import FooterStudent from "./components/FooterStudent";
 import HeaderLogo from "./components/HeaderLogo";
 import students from "./data/students";
+import { userService } from "./services/userService";
+import { storageService } from "./services/storageService";
 
 const App = () => {
+  const [loggedInUser, setLoggedInUser] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+
   const [studentArr, setStudentArr] = useState(students);
   const [studentInfo, setStudentInfo] = useState(null);
+
+
+  useEffect(() => {
+    const loggedInUser = storageService.getLoggedInUser();
+
+    if (loggedInUser) {
+      setLoggedInUser(loggedInUser);
+    }
+  }, []);
+
+  const handleAuth = (
+    username,
+    password,
+    isRegister = false,
+    email = "",
+    id
+  ) => {
+    if (isRegister) {
+      // register
+      userService.createUser(username, email, password), id;
+      setShowRegister(false);
+    } else {
+      // login
+      const user = userService.login(username, password);
+      if (!user) {
+        alert("Invalid credentials");
+        setShowRegister(true);
+        return;
+      }
+      setLoggedInUser(user);
+    }
+  };
+
+  const handleLogout = () => {
+    userService.logout();
+    setLoggedInUser(null);
+  };
+
+
+
+  //----------------------------------------------
 
   //update list with new stusent
   const updateStudentList = (newStudent) => {
@@ -35,31 +84,30 @@ const App = () => {
   };
 
   // update student info
-  const updateStudentInfo=(studentInfoToUpdate)=>{
-    let studentAfterUpdate = studentArr.map((student)=>{
-      if(student.id === studentInfoToUpdate.id){
-        let studentInfoUpdate={
+  const updateStudentInfo = (studentInfoToUpdate) => {
+    let studentAfterUpdate = studentArr.map((student) => {
+      if (student.id === studentInfoToUpdate.id) {
+        let studentInfoUpdate = {
           id: studentInfoToUpdate.id,
           name: studentInfoToUpdate.name,
           age: studentInfoToUpdate.age,
           major: studentInfoToUpdate.major,
           university: studentInfoToUpdate.university,
           averageGrade: studentInfoToUpdate.averageGrade,
-        }
-        return studentInfoUpdate
+        };
+        return studentInfoUpdate;
       }
-      return student
+      return student;
     });
-    setStudentArr(studentAfterUpdate)
- 
-  }
+    setStudentArr(studentAfterUpdate);
+  };
 
   //close div of edit student, cancel btn
   function cancelEdit() {
     setStudentInfo(null);
   }
 
-  //close div of edit student, after click update 
+  //close div of edit student, after click update
   function closeDivAfterAdd() {
     setStudentInfo(null);
   }
@@ -67,18 +115,28 @@ const App = () => {
   return (
     <div className="app">
       <div className="content_wrap">
-        <HeaderLogo
-          updateList={updateStudentList}
-          studentInfo={studentInfo}
-          updateStudentInfo={updateStudentInfo}
-          cancelEdit={cancelEdit}
-          closeDivAfterAdd={closeDivAfterAdd}
-        />
-        <Dashboard
-          listOfStudent={studentArr}
-          removeStudent={removeStudent}
-          getInfoStudent={getInfoStudent}
-        />
+
+        {loggedInUser? <HeaderLogo loggedInUser={loggedInUser} handleLogout={handleLogout}/>:null}
+
+        {!loggedInUser ? (
+          showRegister ? (
+            <SignUp handleAuth={handleAuth} setShowRegister={setShowRegister} />
+          ) : (
+            <Login handleAuth={handleAuth} setShowRegister={setShowRegister} />
+          )
+        ) : (
+          <Dashboard
+            loggedInUser={loggedInUser}
+            updateList={updateStudentList}
+            studentInfo={studentInfo}
+            updateStudentInfo={updateStudentInfo}
+            cancelEdit={cancelEdit}
+            closeDivAfterAdd={closeDivAfterAdd}
+            listOfStudent={studentArr}
+            removeStudent={removeStudent}
+            getInfoStudent={getInfoStudent}
+          />
+        )}
       </div>
 
       <FooterStudent />

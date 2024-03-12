@@ -29,7 +29,7 @@ const EditStudent = ({ studentInfo, updateStudentInfo, closeDivAfterAdd }) => {
   }
 
   return (
-    <div>
+    <div className="edit_user_div">
       <form className="form" onSubmit={(e) => sumbitEdit(e)}>
         <div>
           <label className="name">Name</label>
