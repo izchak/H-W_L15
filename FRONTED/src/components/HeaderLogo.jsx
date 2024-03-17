@@ -10,7 +10,10 @@ const HeaderLogo = ({ loggedInUser, handleLogout }) => {
       {loggedInUser && (
         <div className="user_and_logout">
           <h3>welcome: {loggedInUser.username}</h3>
-          <img src={`https://robohash.org/${loggedInUser.username}`} className="avater"/>
+          <img
+            src={`https://robohash.org/${loggedInUser.username}`}
+            className="avater"
+          />
           <Button onClick={() => handleLogout()} className="btn_add">
             logout
           </Button>

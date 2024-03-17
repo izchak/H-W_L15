@@ -1,22 +1,19 @@
 {
-  "name": "backend",
+  "name": "h-w_itzchak_niyazov_15",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server server.js",
-    "dev": "nodemon server server.js"
+    "BACKEND": "cd BACKEND && npm start",
+    "FRONTED":"cd FRONTED && npm run dev",
+    "dev": "concurrently \"npm run BACKEND\" \"npm run FRONTED\""
+
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.3",
-    "mongodb": "^6.5.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
+    "concurrently": "^8.2.2"
   }
 }

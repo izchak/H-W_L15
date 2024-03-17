@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef } from "react";
-import { utilService } from "../services/utilService";
+// import { utilService } from "../services/utilService";
+import { userService } from "../services/userService";
 
 const SignUp = ({ setShowRegister, handleAuth }) => {
   const userNameRef = useRef(null);
@@ -9,13 +10,11 @@ const SignUp = ({ setShowRegister, handleAuth }) => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-
     const username = userNameRef.current.value;
     const password = passwordRef.current.value;
     const email = emailRef.current.value;
 
     if (!username.trim() || !password.trim() || !email.trim()) return;
-
     handleAuth(username, password, true, email);
   };
   return (

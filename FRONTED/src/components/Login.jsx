@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-
+import { userService } from "../services/userService";
+import { storageService } from "../services/storageService";
 
 const Login = ({ setShowRegister, handleAuth }) => {
   const [username, setUsername] = useState("");
@@ -10,6 +11,7 @@ const Login = ({ setShowRegister, handleAuth }) => {
     e.preventDefault();
     handleAuth(username, password)
   };
+
   return (
     <div className="login_container">
       <div className="login_divs">
@@ -40,11 +42,11 @@ const Login = ({ setShowRegister, handleAuth }) => {
             <button className="btn-login">Login</button>
           </form>
           <div className="auth-switch">
-        <p>
-          Don't have an account?{" "}
-          <button onClick={() => setShowRegister(true)}>Sign up</button>
-        </p>
-      </div>
+            <p>
+              Don't have an account?{" "}
+              <button onClick={() => setShowRegister(true)}>Sign up</button>
+            </p>
+          </div>
         </div>
       </div>
     </div>

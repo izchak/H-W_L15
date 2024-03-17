@@ -1,47 +1,157 @@
 import { storageService } from "./storageService";
-import { utilService } from "./utilService";
 // import axios from "axios"
 
-function createUser(username, email, password, avatar = "") {
-  const newUser = {
-    id: utilService.generateId(),
-    username,
-    password,
-    email,
-    avatar,
-    isAdmin: false,
-    createdAt: new Date().toJSON().slice(0, 10),
-  };
-  const totalUsers = storageService.getUsers();
-  storageService.saveUsers([...totalUsers, newUser]);
+async function createUser(username, email, password) {
+  try {
+    const response = await makeFetchRequest(
+      "http://127.0.0.1:5000/api/register",
+      "POST",
+      {
+        email,
+        username,
+        password,
+      }
+    );
+    if (!response.success) {
+      alert(response.message);
+      return;
+    }
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
 }
 
-function login(username, password) {
-  const users = storageService.getUsers();
-  const foundedUser = users.find(
-    (user) => user.password === password && user.username === username
-  );
-
-  if (!foundedUser) return null;
-  storageService.saveLoggedInUser(foundedUser);
-  return foundedUser;
+async function login(username, password) {
+  try {
+    const response = await makeFetchRequest(
+      "http://127.0.0.1:5000/api/login",
+      "POST",
+      {
+        username,
+        password,
+      }
+    );
+    if (!response.success) {
+      alert(response.message);
+      return;
+    }
+    storageService.saveLoggedInUser(response.user);
+    // if (response.user.isAdmin === true) {
+    // }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function logout() {
   storageService.clearAll();
 }
 
-async function fetchAvatar(username){
+async function makeFetchRequest(url, method = "GET", body = null) {
+  const response = await fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : null,
+  });
+  return response.json();
+}
+
+async function createStudents(studentList) {
   try {
-    const URL=`https://robohash.org/${username}`
-    const res=await fetch(URL)
-    const data =await res.json()
-    return data
+    const response = await makeFetchRequest(
+      "http://127.0.0.1:5000/api/insertStudents",
+      "POST",
+      {
+        name: studentList.name,
+        age: studentList.age,
+        major: studentList.major,
+        university: studentList.university,
+        averageGrade: studentList.averageGrade,
+      }
+    );
+
+    if (!response.success) {
+      alert(response.message);
+      return;
+    }
+
+    alert("student have been added successfully");
+    return response.success;
   } catch (error) {
-    console.log(error)
-    
+    console.log(error);
+    alert(error.message);
   }
 }
+
+async function loadStudents() {
+  try {
+    const response = await makeFetchRequest(
+      "http://127.0.0.1:5000/api/students"
+    );
+    const students = response.students;
+    return students;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function removeStundent(id) {
+  try {
+    const response = await makeFetchRequest(
+      "http://127.0.0.1:5000/api/deleteUser",
+      "POST",
+      { id }
+    );
+
+    if (!response.success) {
+      alert(response.message);
+      return;
+    }
+    return response.success;
+  } catch (error) {
+    console.log;
+  }
+}
+
+async function updateStudent(id, name, age, major, university, averageGrade) {
+  try {
+    const response = await makeFetchRequest(
+      "http://127.0.0.1:5000/api/updateStudent",
+      "POST",
+      { id, name, age, major, university, averageGrade }
+    );
+
+    if (!response.success) {
+      alert(response.message);
+      return;
+    }
+    return response.success;
+  } catch (error) {
+    console.log;
+  }
+}
+
+export const userService = {
+  createUser,
+  login,
+  logout,
+  makeFetchRequest,
+  loadStudents,
+  createStudents,
+  removeStundent,
+  updateStudent,
+};
+
+// async function fetchAvatar(username) {
+//   try {
+//     const URL = `https://robohash.org/${username}`;
+//     const res = await fetch(URL);
+//     const data = await res.json();
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 // async function fetchAvatar(username = "shoshi") {
 //   try {
@@ -75,5 +185,3 @@ async function fetchAvatar(username){
 //     console.log(error);
 //   }
 // }
-
-export const userService = { createUser, login, logout,fetchAvatar };

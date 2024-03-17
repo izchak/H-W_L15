@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const AddStudent = ({ addNewStudent }) => {
-  const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [major, setMajor] = useState("");
@@ -10,17 +9,13 @@ const AddStudent = ({ addNewStudent }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    const newStudent = { id, name, age, major, university, averageGrade };
+    const newStudent = { name, age, major, university, averageGrade };
     addNewStudent(newStudent);
   };
 
   return (
     <div>
       <form className="form" onSubmit={(e) => submit(e)}>
-        <div>
-          <label className="id">ID</label>
-          <input id="id" onChange={(e) => setId(e.target.value)} />
-        </div>
         <div>
           <label className="name">Name</label>
           <input id="name" onChange={(e) => setName(e.target.value)} />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const EditStudent = ({ studentInfo, updateStudentInfo, closeDivAfterAdd }) => {
-  const [id, setId] = useState(studentInfo.id);
+  const [id, setId] = useState(studentInfo._id);
   const [name, setName] = useState(studentInfo.name);
   const [age, setAge] = useState(studentInfo.age);
   const [major, setMajor] = useState(studentInfo.major);

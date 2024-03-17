@@ -18,8 +18,7 @@ const Dashboard = ({
 }) => {
   const [islcickd, setIsclickd] = useState(false);
   const [add, setAdd] = useState("Add student");
-  console.log(loggedInUser.isAdmin)
-
+  
   function addUserBtn() {
     if (islcickd === false) {
       setIsclickd(true);
