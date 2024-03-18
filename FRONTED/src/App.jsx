@@ -28,6 +28,7 @@ const App = () => {
     const loadData = async () => {
       const data = await userService.loadStudents();
       setStudentArr(data);
+      // console.log()
     };
 
     loadData();
